@@ -17,6 +17,12 @@ public class StudentDTO {
     @NotNull(message = "Last name must not be blank.")
     private String lastName;
 
+    public StudentDTO(@NotNull(message = "UserId must not be blank.") @Size(min = 4, max = 15, message = "UserId must be between 4 to 15 Characters.") Integer userId, @NotNull(message = "First name must not be blank.") String firstName, @NotNull(message = "Last name must not be blank.") String lastName) {
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public Integer getUserId() {
         return userId;
     }

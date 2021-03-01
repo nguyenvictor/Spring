@@ -17,10 +17,13 @@ public class StudentController {
     @Autowired
     StudentService studentService;
 
-    @GetMapping("/{id}")
-    ResponseEntity<Student> getSpecificStudentId(@PathVariable("id") Integer studentId){
-        Student response = studentService.getSpecificStudentId(studentId);
-        return new ResponseEntity<Student>(response, HttpStatus.OK);
+    @GetMapping("/{userId}")
+    ResponseEntity<Student> getSpecificStudentId(@PathVariable("userId") Integer userId){
+        Student response = studentService.getSpecificStudentId(userId);
+
+//        Student student = new Student(1234,"h","g");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+//        return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
     @GetMapping()
@@ -29,19 +32,25 @@ public class StudentController {
         return new ResponseEntity<List<Student>>(response,HttpStatus.OK);
     }
 
-    @PostMapping()
-    void addStudent(StudentDTO student){
-        studentService.addStudent(student);
+    @PostMapping(value = "/add", consumes="application/json")
+    public ResponseEntity<String> addStudent(@RequestBody Student student){
+        String response = studentService.addStudent(student);
+        System.out.println("student has been added");
+        return ResponseEntity.ok(response);
 
     }
 
-    @DeleteMapping()
-    void deleteStudent(Integer studentId){
-        studentService.deleteStudent(studentId);
+    @DeleteMapping("/delete/{userId}")
+    public ResponseEntity<String> deleteStudent(@PathVariable("userId") Integer userId){
+        String response = studentService.deleteStudent(userId);
+        System.out.println("Student has been deleted");
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping()
-    void editStudent(Student student){
-        studentService.editStudent(student);
+    public ResponseEntity<String> editStudent(Student student){
+        String response = studentService.editStudent(student);
+        System.out.println("Student has been edited");
+        return ResponseEntity.ok(response);
     }
 }

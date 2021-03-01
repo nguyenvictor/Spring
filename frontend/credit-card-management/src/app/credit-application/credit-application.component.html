@@ -1,0 +1,63 @@
+
+<form [formGroup]="creditForm">
+    <h3>Basic Information</h3>
+<div>
+<label>First Name:</label>
+<input type="text" formControlName= "firstName">
+<p *ngIf= "creditForm.controls.firstName.errors">This field is required.</p>
+</div>
+<div>
+<label>Last Name:</label>
+<input type="text" formControlName= "lastName">
+<p *ngIf= "creditForm.controls.lastName.errors">This field is required.</p>
+</div>
+
+<div>
+<label>Phone Number:</label>
+<input type="text" formControlName= "phoneNo">
+<p *ngIf= "creditForm.controls.phoneNo.errors">This field is required.</p>
+</div>
+<div>
+<label>SSN:</label>
+<input type="text" formControlName= "ssn">
+<p *ngIf= "creditForm.controls.ssn.errors">This field is required.</p>
+</div>
+<div formGroupName="address">
+    <h3>Address</h3>
+    <label>
+        Street:
+        <input type="text" formControlName="street">
+        <p *ngIf= "creditForm.controls.street.errors">This field is required.</p>
+      </label>
+    
+      <label>
+        City:
+        <input type="text" formControlName="city">
+        <p *ngIf= "creditForm.controls.city.errors">This field is required.</p>
+      </label>
+      
+      <label>
+        State:
+        <input type="text" formControlName="state">
+        <p *ngIf= "creditForm.controls.state.errors">This field is required.</p>
+      </label>
+    
+      <label>
+        Zip Code:
+        <input type="text" formControlName="zip">
+        <p *ngIf= "creditForm.controls.zip.errors">This field is required.</p>
+      </label>    
+</div>
+<button type="submit" (click)="submitted = true">Submit</button>
+</form>
+<div [hidden]= "!submitted">
+    <h3>Testing Details</h3>
+    <p>First Name: {{creditForm.get('firstName').value}}</p>
+    <p>Last Name: {{creditForm.get('lastName').value}}</p>
+    <p>Phone Number: {{creditForm.get('phoneNo').value}}</p>
+    <p>SSN: {{creditForm.get('ssn').value}}</p>
+    <p>Street: {{creditForm.get('address.street').value}}</p>
+    <p>City: {{creditForm.get('address.city').value}}</p>
+    <p>State: {{creditForm.get('address.state').value}}</p>
+    <p>Zip: {{creditForm.get('address.zip').value}}</p>
+</div>

@@ -31,20 +31,24 @@ public class StudentService {
         return listOfStudent;
     }
 
-    public void addStudent(StudentDTO student){
-        Student stud = student.createEntity();
-        studentRepository.save(stud);
+    public String addStudent(Student student){
+        Student student1 = student;
+        studentRepository.save(student1);
+        return "Student with id: " + student.getStudentId()+ " added successfully";
     }
 
-    public void deleteStudent(Integer studentId){
+    public String deleteStudent(Integer studentId){
+
             studentRepository.deleteById(studentId);
+            return "Student with id: " + studentId + " deleted successfully";
     }
 
-    public void editStudent(Student student){
+    public String editStudent(Student student){
 
         Optional<Student> studentChange = studentRepository.findById(student.getStudentId());
         if(studentChange.isPresent()){
             studentRepository.save(studentChange.get());
+            return "Student with id: " + student.getStudentId() + " changed successfully";
         }
         else{
             throw new NullPointerException();

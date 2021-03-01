@@ -1,14 +1,13 @@
 package com.demo.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Student {
 
     @Id
     @Column(nullable = false)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     Integer studentId;
 
     @Column(nullable = false)
@@ -16,6 +15,13 @@ public class Student {
 
     @Column(nullable = false)
     String lastName;
+
+    public Student(){}
+    public Student(Integer studentId, String firstName, String lastName) {
+        this.studentId = studentId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     public Integer getStudentId() {
         return studentId;
