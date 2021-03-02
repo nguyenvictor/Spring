@@ -1,55 +1,62 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 <form [formGroup]="creditForm">
     <h3>Basic Information</h3>
-<div>
+
+<div class = "form-group">
 <label>First Name:</label>
-<input type="text" formControlName= "firstName">
+<input class = "form-control" type="text" formControlName= "firstName">
 <p *ngIf= "creditForm.controls.firstName.errors">This field is required.</p>
 </div>
-<div>
+
+<div class = "form-group">
 <label>Last Name:</label>
-<input type="text" formControlName= "lastName">
+<input class = "form-control" type="text" formControlName= "lastName">
 <p *ngIf= "creditForm.controls.lastName.errors">This field is required.</p>
 </div>
 
-<div>
+<div class = "form-group">
 <label>Phone Number:</label>
-<input type="text" formControlName= "phoneNo">
+<input class = "form-control" type="text" formControlName= "phoneNo">
 <p *ngIf= "creditForm.controls.phoneNo.errors">This field is required.</p>
 </div>
-<div>
+
+<div class = "form-group">
 <label>SSN:</label>
-<input type="text" formControlName= "ssn">
+<input class = "form-control" type="text" formControlName= "ssn">
 <p *ngIf= "creditForm.controls.ssn.errors">This field is required.</p>
 </div>
-<div formGroupName="address">
+
+<div class = "form-group" formGroupName="address">
     <h3>Address</h3>
     <label>
         Street:
-        <input type="text" formControlName="street">
+        <input class = "form-control" type="text" formControlName="street">
         <p *ngIf= "creditForm.controls.street.errors">This field is required.</p>
       </label>
     
       <label>
         City:
-        <input type="text" formControlName="city">
+        <input class = "form-control" type="text" formControlName="city">
         <p *ngIf= "creditForm.controls.city.errors">This field is required.</p>
       </label>
       
       <label>
         State:
-        <input type="text" formControlName="state">
+        <input class = "form-control" type="text" formControlName="state">
         <p *ngIf= "creditForm.controls.state.errors">This field is required.</p>
       </label>
     
       <label>
         Zip Code:
-        <input type="text" formControlName="zip">
+        <input class = "form-control" type="text" formControlName="zip">
         <p *ngIf= "creditForm.controls.zip.errors">This field is required.</p>
       </label>    
 </div>
+
 <button type="submit" (click)="submitted = true">Submit</button>
 </form>
+
 <div [hidden]= "!submitted">
     <h3>Testing Details</h3>
     <p>First Name: {{creditForm.get('firstName').value}}</p>
