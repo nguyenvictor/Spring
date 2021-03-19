@@ -2,9 +2,11 @@ package com.demo.service;
 
 import com.demo.dto.StudentDTO;
 import com.demo.entity.Student;
+import com.demo.exception.StudentNotFoundException;
 import com.demo.repository.StudentRepository;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,14 +21,14 @@ public class StudentService {
 
     @HystrixCommand(fallbackMethod = "getStudentFallback")
     public Student getSpecificStudentId(Integer studentId){
-        Optional<Student> student = studentRepository.findById(studentId);
-        if(student.isPresent()){
-            return student.get();
-        }
-        else{
-            throw new NullPointerException();
-        }
-
+//        Optional<Student> student = studentRepository.findById(studentId);
+//        if(student.isPresent()){
+//            return student.get();
+//        }
+//        else{
+//            throw new NullPointerException();
+//        }
+        return studentRepository.findById(studentId).orElseThrow(() -> new StudentNotFoundException("Student not found by id:" + studentId));
     }
 
     public Student getStudentFallback(Integer studentId){
@@ -45,41 +47,44 @@ public class StudentService {
     }
 
     @HystrixCommand(fallbackMethod = "addStudentFallback")
-    public String addStudent(Student student){
+    public Student addStudent(Student student){
         Student student1 = student;
-        studentRepository.save(student1);
-        return "Student with id: " + student.getStudentId()+ " added successfully";
+        return studentRepository.save(student1);
     }
 
-    public String addStudentFallback(Student student){
-        return "Fallback: Student has not been added";
+    public Student addStudentFallback(Student student){
+        return new Student();
     }
 
-    @HystrixCommand(fallbackMethod = "deleteStudentFallback")
-    public String deleteStudent(Integer studentId){
+//    @HystrixCommand(fallbackMethod = "deleteStudentFallback")
+    public void deleteStudent(Integer studentId){
 
             studentRepository.deleteById(studentId);
-            return "Student with id: " + studentId + " deleted successfully";
     }
 
-    public String delteStudentFallback(Integer studentId){
-        return "Fallbackmethod: Student has not been deleted";
-    }
+//    public String deleteStudentFallback(Integer studentId){
+//        return "Fallbackmethod: Student has not been deleted";
+//    }
 
-    @HystrixCommand(fallbackMethod = "editStudentFallback")
-    public String editStudent(Student student){
-
-        Optional<Student> studentChange = studentRepository.findById(student.getStudentId());
-        if(studentChange.isPresent()){
-            studentRepository.save(studentChange.get());
-            return "Student with id: " + student.getStudentId() + " changed successfully";
+//    @HystrixCommand(fallbackMethod = "editStudentFallback")
+    public Student editStudent(Student student){
+        Optional<Student> updateStudent = studentRepository.findById(student.getStudentId());
+        if(updateStudent.isPresent()){
+            Student s = updateStudent.get();
+            s.setFirstName(student.getFirstName());
+            s.setLastName(student.getLastName());
+            s.setEmail(student.getEmail());
+            s.setPhoneNo(student.getPhoneNo());
+            studentRepository.save(s);
+            return s;
         }
-        else{
-            throw new NullPointerException();
+        else {
+            throw new StudentNotFoundException("No student with ID");
         }
+
     }
 
-    public String editStudentFallback(){
-        return "Fallbackmethod: Student has not been edited";
-    }
+//    public Student editStudentFallback(Student student){
+//        return new Student();
+//    }
 }

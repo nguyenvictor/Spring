@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -40,25 +40,25 @@ public class StudentController {
     }
 
     @PostMapping(value = "/add", consumes="application/json")
-    public ResponseEntity<String> addStudent(@RequestBody Student student){
-        String response = studentService.addStudent(student);
+    public ResponseEntity<Student> addStudent(@RequestBody Student student){
+        Student response = studentService.addStudent(student);
         logger.info("Student has been added");
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response,HttpStatus.CREATED);
 
     }
 
     @DeleteMapping("/delete/{userId}")
-    public ResponseEntity<String> deleteStudent(@PathVariable("userId") Integer userId){
-        String response = studentService.deleteStudent(userId);
+    public ResponseEntity<?> deleteStudent(@PathVariable("userId") Integer userId){
+        studentService.deleteStudent(userId);
         logger.info("Student has been deleted");
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping()
-    public ResponseEntity<String> editStudent(Student student){
-        String response = studentService.editStudent(student);
+    @PutMapping("/update")
+    public ResponseEntity<Student> editStudent(@RequestBody Student student){
+        Student response = studentService.editStudent(student);
         logger.info("Student has been changed");
-        return ResponseEntity.ok(response);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
 }

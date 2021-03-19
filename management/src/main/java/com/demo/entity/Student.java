@@ -16,11 +16,36 @@ public class Student {
     @Column(nullable = false)
     String lastName;
 
+    @Column(nullable = false)
+    String email;
+
+    @Column(nullable = false)
+    String phoneNo;
+
     public Student(){}
-    public Student(Integer studentId, String firstName, String lastName) {
+
+    public Student(Integer studentId, String firstName, String lastName, String email, String phoneNo) {
         this.studentId = studentId;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+        this.phoneNo = phoneNo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
     public Integer getStudentId() {

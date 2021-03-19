@@ -17,10 +17,18 @@ public class StudentDTO {
     @NotNull(message = "Last name must not be blank.")
     private String lastName;
 
-    public StudentDTO(@NotNull(message = "UserId must not be blank.") @Size(min = 4, max = 15, message = "UserId must be between 4 to 15 Characters.") Integer userId, @NotNull(message = "First name must not be blank.") String firstName, @NotNull(message = "Last name must not be blank.") String lastName) {
+    @NotNull(message = "Email must not be blank.")
+    private String email;
+
+    @NotNull(message = "Phone Number must not be blank.")
+    private String phoneNo;
+
+    public StudentDTO(@NotNull(message = "UserId must not be blank.") @Size(min = 4, max = 15, message = "UserId must be between 4 to 15 Characters.") Integer userId, @NotNull(message = "First name must not be blank.") String firstName, @NotNull(message = "Last name must not be blank.") String lastName, @NotNull(message = "Email must not be blank.") String email, @NotNull(message = "Phone Number must not be blank.") String phoneNo) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+        this.phoneNo = phoneNo;
     }
 
     public Integer getUserId() {
@@ -47,12 +55,30 @@ public class StudentDTO {
         this.lastName = lastName;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
     @Override
     public String toString() {
         return "StudentDTO{" +
-                "userId='" + userId + '\'' +
+                "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNo='" + phoneNo + '\'' +
                 '}';
     }
 
@@ -61,6 +87,8 @@ public class StudentDTO {
         stud.setStudentId(this.getUserId());
         stud.setFirstName(this.getFirstName());
         stud.setLastName(this.getLastName());
+        stud.setEmail(this.getEmail());
+        stud.setPhoneNo(this.getPhoneNo());
         return stud;
     }
 }
